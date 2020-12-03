@@ -1,0 +1,11 @@
+{
+  "name": "advent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Billy's advent of code",
+  "main": "index.js",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "node-fetch": "^2.6.1"
+  }
+}
