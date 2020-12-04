@@ -6,9 +6,9 @@ requiredFields = {
 	'iyr': lambda val: int(val) >= 2010 and int(val) <= 2020, 
 	'eyr': lambda val: int(val) >= 2020 and int(val) <= 2030, 
 	'hgt': lambda val: hgtCheck(val), 
-	'hcl': lambda val: re.match('#[0-9a-f]{6}', val), 
+	'hcl': lambda val: re.match('#[0-9a-f]{6}', val) and len(val) == 7, 
 	'ecl': lambda val: val in eyeColors, 
-	'pid': lambda val: re.match('[0-9]{9}', val)
+	'pid': lambda val: re.match('[0-9]{9}', val) and len(val) == 9
 	}
 eyeColors = set(['amb','blu','brn','gry','grn','hzl','oth'])
 optionalFields = ('cid')
