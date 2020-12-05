@@ -2,11 +2,18 @@
 
 
 def main():
+	seatsSet = set()
 	maxSeatId = 0
 	with open('day5.txt', 'r') as file:
 		for boardingPass in file:
-			maxSeatId = max(maxSeatId, boardingPassToSeatID(boardingPass))
-	print(maxSeatId)
+			nextSeatId = boardingPassToSeatID(boardingPass)
+			maxSeatId = max(maxSeatId, nextSeatId)
+			seatsSet.add(nextSeatId)
+		for seat in range(128 * 8):
+			if seat not in seatsSet and seat-1 in seatsSet and seat+1 in seatsSet:
+				print("part2: " + str(seat))
+
+	print("part1: " + str(maxSeatId))
 
 
 
