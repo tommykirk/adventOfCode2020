@@ -35,10 +35,13 @@ def part1(changedIndex):
 
 part1(-1)
 
-for index in visitedIndices:
+originalVisited = visitedIndices.copy()
+
+for index in originalVisited:
 	if instructions[index][0] == 'acc':
 		continue
 	else:
 		if part1(index)[0]:
 			print(part1(index)[1])
+			break
 
