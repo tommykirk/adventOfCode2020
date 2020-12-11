@@ -28,6 +28,38 @@ def getNumAdjacentPeople(r, c, matrix):
 
 	return numAdjacentPeople
 
+def getNumVisiblePeople(r, c, matrix):
+	numAdjacentPeople = 0
+	if getFirstNonEmptySquareInDirection(r, c, 1, 0, matrix) == '#':
+		numAdjacentPeople += 1
+	if getFirstNonEmptySquareInDirection(r, c, 1, 1, matrix) == '#':
+		numAdjacentPeople += 1
+	if getFirstNonEmptySquareInDirection(r, c, -1, 0, matrix) == '#':
+		numAdjacentPeople += 1
+	if getFirstNonEmptySquareInDirection(r, c, -1, -1, matrix) == '#':
+		numAdjacentPeople += 1
+
+	if getFirstNonEmptySquareInDirection(r, c, 0, 1, matrix) == '#':
+		numAdjacentPeople += 1
+	if getFirstNonEmptySquareInDirection(r, c, -1, 1, matrix) == '#':
+		numAdjacentPeople += 1
+	if getFirstNonEmptySquareInDirection(r, c, 0, -1, matrix) == '#':
+		numAdjacentPeople += 1
+	if getFirstNonEmptySquareInDirection(r, c, 1, -1, matrix) == '#':
+		numAdjacentPeople += 1
+
+	return numAdjacentPeople
+
+def getFirstNonEmptySquareInDirection(r, c, rowDir, colDir, matrix):
+	r += rowDir
+	c += colDir
+	while r < len(matrix) and c < len(matrix[0]) and r >= 0 and c >= 0:
+		if matrix[r][c] != '.':
+			return matrix[r][c]
+		r += rowDir
+		c += colDir
+	return '.'
+
 def compareTwoMatrices(originalSeatLayout, nextSeatLayout):
 	for i in range(len(originalSeatLayout)):
 		for j in range(len(originalSeatLayout[0])):
@@ -39,7 +71,7 @@ def compareTwoMatrices(originalSeatLayout, nextSeatLayout):
 with open('day11.txt', 'r') as file:
 	numComps = 0
 	replacementSeatMatrix = [[c for c in line.strip()] for line in file]
-	print(replacementSeatMatrix)
+	# print(replacementSeatMatrix)
 	seatMatrix = [['0' for x in seatMatrixRow] for seatMatrixRow in replacementSeatMatrix]
 
 	while not compareTwoMatrices(seatMatrix, replacementSeatMatrix) and numComps < 100:
@@ -52,18 +84,18 @@ with open('day11.txt', 'r') as file:
 				if seatMatrix[r][c] == '.':
 					replacementSeatMatrix[r][c] = '.'
 				elif seatMatrix[r][c] == '#': 
-					if getNumAdjacentPeople(r, c, seatMatrix) >= 4:
+					if getNumVisiblePeople(r, c, seatMatrix) >= 5:
 						replacementSeatMatrix[r][c] = 'L'
 					else:
 						replacementSeatMatrix[r][c] = '#'
 				else:
-					if getNumAdjacentPeople(r, c, seatMatrix) > 0:
+					if getNumVisiblePeople(r, c, seatMatrix) > 0:
 						replacementSeatMatrix[r][c] = 'L'
 					else:
 						replacementSeatMatrix[r][c] = '#'
 
 	print('numComps: ', numComps)
-	print(replacementSeatMatrix)
+	# print(replacementSeatMatrix)
 
 	count = 0
 
