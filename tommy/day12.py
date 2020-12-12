@@ -13,6 +13,9 @@
 # F49
 
 
+#   (10, 1)    (-1, 10),    (-10, -1), (1, -10)
+
+wayPoint = [10, 1]
 with open('day12.txt', 'r') as file:
 	currCoords = [0, 0]
 	directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
@@ -27,15 +30,21 @@ with open('day12.txt', 'r') as file:
 		action = line[0]
 		value = int(line[1:])
 		if action in cardinals.keys():
-			currCoords[0] += value * cardinals[action][0]
-			currCoords[1] += value * cardinals[action][1]
+			wayPoint[0] += value * cardinals[action][0]
+			wayPoint[1] += value * cardinals[action][1]
 		elif action == 'L':
-			currDirection = (currDirection + (value // 90)) % 4
+			v = (value // 90) % 4
+			for i in range(v):
+				wayPoint[0], wayPoint[1] = wayPoint[1], wayPoint[0]
+				wayPoint[0] *= -1
 		elif action == 'R':
-			currDirection = (currDirection - (value // 90)) % 4
+			v = (value // 90) % 4
+			for i in range(v):
+				wayPoint[0], wayPoint[1] = wayPoint[1], wayPoint[0]
+				wayPoint[1] *= -1
 		elif action == 'F':
-			currCoords[0] += value * directions[currDirection][0]
-			currCoords[1] += value * directions[currDirection][1]
+			currCoords[0] += value * wayPoint[0]
+			currCoords[1] += value * wayPoint[1]
 		else:
 			print('ERROR: ', line)
 
