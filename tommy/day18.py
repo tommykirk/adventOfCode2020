@@ -19,7 +19,7 @@ def parse(parseList):
 			parseList[-1] += num2
 
 
-
+# ((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2
 with open('day18.txt', 'r') as file:
 	sumOfLines = 0
 	i = 0
@@ -31,7 +31,8 @@ with open('day18.txt', 'r') as file:
 			if c != ')':
 				if c not in ['(','*','+']:
 					parseList.append(int(c))
-					parse(parseList)
+					if len(parseList) >= 2 and parseList[-2] == '+':
+						parse(parseList)
 				else:
 					parseList.append(c)
 			else:
@@ -39,13 +40,12 @@ with open('day18.txt', 'r') as file:
 					parse(parseList)
 				parseList[-2] = parseList[-1]
 				parseList.pop()
-				while len(parseList) >= 3 and '(' not in parseList[-3:]:
+				while len(parseList) >= 3 and '(' not in parseList[-3:] and parseList[-2] == '+':
 					parse(parseList)
 
 		print(i)
-		if len(parseList) > 1:
-			raise
-		else:
-			sumOfLines += parseList[0]
+		while len(parseList) > 1:
+			parse(parseList)
+		sumOfLines += parseList[0]
 
 		print(sumOfLines)
